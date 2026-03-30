@@ -233,9 +233,9 @@ class EKFLocalizationNode(DTROS):
     def doPredict(self, event=None):
 
 
-        if self.delta_phi_right == 0 and self.delta_phi_left ==0:
+      #  if self.delta_phi_right == 0 and self.delta_phi_left ==0:
             # we haven't moved no need to predict
-            return
+      #      return
 
         with self.left_wheel_mutex:
             with self.right_wheel_mutex:
@@ -365,8 +365,14 @@ class EKFLocalizationNode(DTROS):
 
             # Update the EKF with this measurement
             self.ekf.update([range_estimate, bearing], [tag_x, tag_y])
+            
+            # Print data to screen
+            print(f"Detected ID= {detection.tag_id} Bearing= {bearing} Distance= {range_estimate}" )
+            
         ids = [det.tag_id for det in detections]
-        self.publish_landmarks(ids)
+        # remove landmarks publishing
+        # self.publish_landmarks(ids)
+        
         self.publish_detections(image_gray, detections, self.latest_img.header)
         self.publish_pose(self.latest_img.header)
 
@@ -478,7 +484,8 @@ class EKFLocalizationNode(DTROS):
         img_msg.data = self.jpeg.encode(img)
         # ---
         self.pub_detections.publish(img_msg)
-
+        
+        
 
 if __name__ == "__main__":
     # Initialize the node

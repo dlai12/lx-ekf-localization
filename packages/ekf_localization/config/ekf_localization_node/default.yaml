@@ -5,9 +5,9 @@ test_sim: False
 
 # this is the initial pose of the duckiebot in the Duckiematrix
 # For real robot experiment you may need to update
-x_0: 0.41
-y_0: 0.61
-theta_0: 1.57
+x_0: 0.88
+y_0: 0.185
+theta_0: 0.0
 
 P_0_xx: 0.1
 P_0_yy: 0.1
