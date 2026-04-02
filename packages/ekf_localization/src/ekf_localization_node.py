@@ -10,6 +10,7 @@ from typing import Optional
 from dt_computer_vision.camera import CameraModel
 from dt_computer_vision.camera.types import Rectifier
 from dt_apriltags import Detector
+from duckietown_msgs.msg import AprilTagDetectionArray, AprilTagDetection
 from turbojpeg import TurboJPEG
 from duckietown_msgs.msg import Twist2DStamped, WheelEncoderStamped
 from sensor_msgs.msg import CompressedImage, CameraInfo
@@ -375,6 +376,9 @@ class EKFLocalizationNode(DTROS):
             self.ekf.update([range_estimate, bearing], [tag_x, tag_y])
             
             # Print data to screen
+            self.tag_id=detection.tag_id
+            self.bearing=bearing
+            self.range_estimate=range_estimate
             print(f"Detected ID= {detection.tag_id} Bearing= {bearing} Distance= {range_estimate}" )
             
         ids = [det.tag_id for det in detections]
