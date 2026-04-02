@@ -167,7 +167,7 @@ class EKFLocalizationNode(DTROS):
             latch=True
         )
         
-        self._tag_pub = rospy.Publisher(
+        self.pub_tag_detections = rospy.Publisher(
             f"{self.veh}/detections",
             AprilTagDetectionArray,
             queue_size=1,
@@ -379,7 +379,11 @@ class EKFLocalizationNode(DTROS):
             self.tag_id=detection.tag_id
             self.bearing=bearing
             self.range_estimate=range_estimate
-            print(f"Detected ID= {detection.tag_id} Bearing= {bearing} Distance= {range_estimate}" )
+            print(f"Detected ID= {detection.tag_id}  Bearing= {bearing} Distance= {range_estimate} Hamming= {detection.hamming} ")
+            print(f"Homography= {detection.homography.flatten().astype(np.float32).tolist()} pose_error={detection.pose_err} center= {detection.center.tolist()}" )
+            
+           
+            
             
         ids = [det.tag_id for det in detections]
         # remove landmarks publishing
