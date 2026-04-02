@@ -165,6 +165,14 @@ class EKFLocalizationNode(DTROS):
             queue_size=1,
             latch=True
         )
+        
+        self._tag_pub = rospy.Publisher(
+            f"{self.veh}/detections",
+            AprilTagDetectionArray,
+            queue_size=1,
+            dt_topic_type=TopicType.PERCEPTION,
+            dt_help="Tag detections",
+        )
 
         # Need to sleep for a bit for the publisher to register with master
         rospy.sleep(0.5)
